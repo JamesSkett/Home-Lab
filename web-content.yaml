@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-content
+data:
+  index.html: |
+    <html>
+      <body style="background-color: #d63384; color: white; font-family: sans-serif; text-align: center; padding-top: 50px;">
+        <h1>Hello from my Raspberry Pi!</h1>
+        <p>This is running on a real K3s cluster.</p>
+      </body>
+    </html>

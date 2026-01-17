@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  token: ZXlKaElqb2lNRFV5TXpjeU1UUTNNV1kyTVRnMVkyUm1OV1kwWkdJd05EZ3lZemczTVRZaUxDSjBJam9pWTJNeFl6RTROMlV0TTJFeU5TMDBOV0ZqTFdJM01EY3RPRFk0TkRZMk1HTmhNekprSWl3aWN5STZJazVIU1ROUFJHc3lUV3BCZEUxWFVtcFBVekF3VFVSS2JFeFhTWGxaYWsxMFRXcFpNVTR5VW1wT01rbDRXV3BDYVN$
+kind: Secret
+metadata:
+  creationTimestamp: "2026-01-17T16:03:55Z"
+  name: tunnel-token
+  namespace: default
+  resourceVersion: "103291"
+  uid: 28587526-f4cb-404b-9f3f-4ee6f3535fb5
+type: Opaque
