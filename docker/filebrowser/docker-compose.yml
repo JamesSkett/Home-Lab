@@ -1,0 +1,15 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    container_name: filebrowser
+    restart: unless-stopped
+    network_mode: "bridge"
+    ports:
+      - "8080:80"  # Web interface
+    environment:
+      - PUID=1000     # your Linux user id
+      - PGID=1000     # your Linux group id
+      - TZ=Europe/London
+    volumes:
+      - /mnt/data:/srv  # Your 2TB HDD (all media)
+      - /srv/docker/filebrowser/config:/config

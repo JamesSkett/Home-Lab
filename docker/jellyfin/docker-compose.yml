@@ -1,0 +1,15 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    network_mode: "bridge"
+    ports:
+      - "8096:8096"   # HTTP
+      - "8920:8920"   # HTTPS (optional)
+    environment:
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/jellyfin/config:/config
+      - /srv/docker/jellyfin/cache:/cache
+      - /mnt/data:/media     # Your 2TB HDD
