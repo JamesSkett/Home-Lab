@@ -1,1 +1,165 @@
-yo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowboarding Countdown</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+  }
+
+  #countdown-container {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    border-radius: 20px;
+    z-index: 1;
+  }
+
+  .time-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.7);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    font-size: 1.5em;
+    position: relative;
+  }
+
+  .label {
+    position: absolute;
+    bottom: -25px;
+    font-size: 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="snow"></canvas>
+
+<div id="countdown-container">
+  <div>
+    <div class="time-circle" id="days">
+      <span>0</span>
+      <div class="label">Days</div>
+    </div>
+    <div class="time-circle" id="hours">
+      <span>0</span>
+      <div class="label">Hours</div>
+    </div>
+  </div>
+  <div>
+    <div class="time-circle" id="minutes">
+      <span>0</span>
+      <div class="label">Minutes</div>
+    </div>
+    <div class="time-circle" id="seconds">
+      <span>0</span>
+      <div class="label">Seconds</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --------- Countdown ---------
+  const targetDate = new Date(2026, 2, 5); // Feb 28, 2026
+  const daysEl = document.querySelector('#days span');
+  const hoursEl = document.querySelector('#hours span');
+  const minutesEl = document.querySelector('#minutes span');
+  const secondsEl = document.querySelector('#seconds span');
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      daysEl.textContent = 0;
+      hoursEl.textContent = 0;
+      minutesEl.textContent = 0;
+      secondsEl.textContent = 0;
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const minutes = Math.floor((diff / (1000*60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    daysEl.textContent = days;
+    hoursEl.textContent = hours;
+    minutesEl.textContent = minutes;
+    secondsEl.textContent = seconds;
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+
+  // --------- Snow Effect ---------
+  const canvas = document.getElementById('snow');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const snowflakes = [];
+
+  function createSnowflakes() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    const radius = Math.random() * 3 + 2;
+    const speed = Math.random() * 1 + 0.5;
+    snowflakes.push({x, y, radius, speed});
+  }
+
+  for (let i = 0; i < 200; i++) {
+    createSnowflakes();
+  }
+
+  function animateSnow() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    snowflakes.forEach(flake => {
+      ctx.moveTo(flake.x, flake.y);
+      ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI*2);
+      flake.y += flake.speed;
+      if (flake.y > canvas.height) {
+        flake.y = -flake.radius;
+        flake.x = Math.random() * canvas.width;
+      }
+    });
+    ctx.fill();
+    requestAnimationFrame(animateSnow);
+  }
+
+  animateSnow();
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
