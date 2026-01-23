@@ -24,5 +24,5 @@ spec:
       volumes:
         - name: hdd
           hostPath:
-            path: /mnt/data
+            path: /home/pi/Home-Lab/web/
             type: Directory
