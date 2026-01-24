@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pi-web-config
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name _;
+
+        root /usr/share/nginx/html;
+
+        index index.html;
+
+        # Serve Unity WebGL build with Brotli/Gzip
+        location /Build/ {
+            try_files $uri.br $uri.gz $uri =404;
+
+            # Add proper headers for compressed files
+            types {
+                application/javascript js;
+                application/octet-stream data;
+            }
+
+            add_header Content-Encoding br;
+        }
+
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+    }
