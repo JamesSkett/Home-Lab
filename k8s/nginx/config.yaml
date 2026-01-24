@@ -11,26 +11,17 @@ data:
         root /usr/share/nginx/html;
         index index.html;
 
-        # 🔑 REQUIRED: correct MIME types
-        include /etc/nginx/mime.types;
+        # Alpine-safe MIME handling
         default_type application/octet-stream;
 
-        # Unity WebGL build files
-        location /unity/PlanetGolf/Build/Build/ {
-
-            # Serve Brotli files if they exist
-            try_files $uri.br $uri =404;
-
-            # Correct MIME types
-            types {
-                application/javascript js;
-                application/wasm wasm;
-                application/octet-stream data;
-            }
+        types {
+            text/html html;
+            application/javascript js;
+            application/wasm wasm;
+            application/octet-stream data;
         }
 
-        # Serve index.html normally
         location / {
-            try_files $uri $uri/ /index.html;
+            try_files $uri $uri/ =404;
         }
     }
