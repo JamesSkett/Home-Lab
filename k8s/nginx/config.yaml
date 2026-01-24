@@ -11,17 +11,22 @@ data:
         root /usr/share/nginx/html;
         index index.html;
 
-        # Alpine-safe MIME handling
-        default_type application/octet-stream;
+        # Force correct MIME types
+        default_type text/html;
 
-        types {
-            text/html html;
-            application/javascript js;
-            application/wasm wasm;
-            application/octet-stream data;
+        # Serve Unity WebGL
+        location / {
+            try_files $uri $uri/ /index.html;
         }
 
-        location / {
+        location /Build/ {
+            default_type application/octet-stream;
+            types {
+                text/html html;
+                application/javascript js;
+                application/wasm wasm;
+                application/octet-stream data;
+            }
             try_files $uri $uri/ =404;
         }
     }
