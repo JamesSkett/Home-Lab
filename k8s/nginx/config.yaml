@@ -9,22 +9,27 @@ data:
         server_name _;
 
         root /usr/share/nginx/html;
-
         index index.html;
 
-        # Serve Unity WebGL build with Brotli/Gzip
-        location /Build/ {
-            try_files $uri.br $uri.gz $uri =404;
+        # 🔑 REQUIRED: correct MIME types
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
 
-            # Add proper headers for compressed files
+        # Unity WebGL build files
+        location /unity/PlanetGolf/Build/Build/ {
+
+            # Serve Brotli files if they exist
+            try_files $uri.br $uri =404;
+
+            # Correct MIME types
             types {
                 application/javascript js;
+                application/wasm wasm;
                 application/octet-stream data;
             }
-
-            add_header Content-Encoding br;
         }
 
+        # Serve index.html normally
         location / {
             try_files $uri $uri/ /index.html;
         }
