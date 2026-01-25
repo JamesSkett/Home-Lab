@@ -1,4 +1,4 @@
-name: Deploy TEST Website
+name: Deploy TEST website
 
 on:
   push:
@@ -14,11 +14,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: test
+          clean: true
+          fetch-depth: 0
+          path: repo
 
-      - name: Sync web files to test directory
+      - name: Sync files to test directory
         run: |
-          rsync -a --delete web/ /home/pi/Home-Lab/web-test/
+          rsync -av --delete repo/ /home/pi/Home-Lab-test/
 
-      - name: Deploy test pod
+      - name: Apply test Kubernetes manifests
         run: |
-          kubectl apply -f k8s/nginx-test/deployment.yaml
+          kubectl apply -f /home/pi/Home-Lab-test/k8s/nginx-test/

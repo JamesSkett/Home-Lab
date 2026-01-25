@@ -1,4 +1,4 @@
-name: Deploy PROD Website
+name: Deploy PROD website
 
 on:
   push:
@@ -14,11 +14,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+          clean: true
+          fetch-depth: 0
+          path: repo
 
-      - name: Sync web files to prod directory
+      - name: Sync files to prod directory
         run: |
-          rsync -a --delete web/ /home/pi/Home-Lab/web/
+          rsync -av --delete repo/ /home/pi/Home-Lab/
 
-      - name: Deploy prod pod
+      - name: Apply prod Kubernetes manifests
         run: |
-          kubectl apply -f k8s/nginx/deployment.yaml
+          kubectl apply -f /home/pi/Home-Lab/k8s/nginx/
