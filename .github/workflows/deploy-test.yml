@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: test
 
-      - name: Deploy test site
+      - name: Apply Kubernetes manifest
         env:
           KUBECONFIG: /home/pi/.kube/config
         run: |
