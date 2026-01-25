@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pi-web
+  name: pi-web-test
   labels:
-    app: pi-web
+    app: pi-web-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pi-web
+      app: pi-web-test
   template:
     metadata:
       labels:
-        app: pi-web
+        app: pi-web-test
     spec:
       containers:
       - name: nginx
