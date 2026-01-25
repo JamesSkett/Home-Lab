@@ -13,6 +13,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Deploy test nginx
+      - name: Deploy test site
+        env:
+          KUBECONFIG: /home/pi/.kube/config
         run: |
           kubectl apply -f k8s/nginx-test/deployment.yaml
+
