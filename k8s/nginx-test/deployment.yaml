@@ -30,7 +30,7 @@ spec:
       volumes:
       - name: web-files
         hostPath:
-          path: /home/pi/Home-Lab/web
+          path: /home/pi/Home-Lab/web-test
           type: Directory
       - name: nginx-config
         configMap:
