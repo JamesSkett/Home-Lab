@@ -172,9 +172,11 @@ html, body {
 
 .lift {
   position: absolute;
-  z-index: 8;
-  will-change: left, top;
+  width: 150px;   /* matches SVG width */
+  height: 100px;  /* matches SVG height */
+  transform-origin: top left; /* important for JS transform */
 }
+
 
 
 .chair {
