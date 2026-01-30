@@ -1,0 +1,27 @@
+name: Deploy PROD website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-prod:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          clean: true
+          fetch-depth: 0
+          path: repo
+
+      - name: Sync files to prod directory
+        run: |
+          rsync -av --delete repo/ /home/pi/Home-Lab/
+
+      - name: Apply prod Kubernetes manifests
+        run: |
+          kubectl apply -f /home/pi/Home-Lab/k8s/nginx/
