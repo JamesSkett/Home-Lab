@@ -151,6 +151,16 @@ function updateCountdown() {
   //console.log(window.countdownProgress);
 }
 
+for (let i = 0; i < 70; i++) {
+  const snow = document.createElement("div");
+  snow.classList.add("snowflake");
+  snow.style.left = `${Math.random() * 1600}px`; // match scene width
+  snow.style.animationDuration = `${5 + Math.random() * 10}s`;
+  snow.style.width = snow.style.height = `${2 + Math.random() * 6}px`;
+  scene.appendChild(snow);
+}
+
+
 // ==========================
 // START
 // ==========================
