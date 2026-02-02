@@ -231,3 +231,21 @@ html, body {
   font-size: 20px;
   font-weight: 600;
 }
+
+/* Snowflake */
+.snowflake {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-50px); }
+  100% { transform: translateY(100vh); }
+}
+
