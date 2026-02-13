@@ -1,0 +1,27 @@
+name: Deploy TEST website
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  deploy-test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+        with:
+          ref: test
+          clean: true
+          fetch-depth: 0
+          path: repo
+
+      - name: Sync files to test directory
+        run: |
+          rsync -av --delete repo/ /home/pi/Home-Lab-test/
+
+      - name: Apply test Kubernetes manifests
+        run: |
+          kubectl apply -f /home/pi/Home-Lab-test/k8s/nginx-test/

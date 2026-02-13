@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pi-web-test
+  labels:
+    app: pi-web-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pi-web-test
+  template:
+    metadata:
+      labels:
+        app: pi-web-test
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        # Mount web files (your Unity build + index.html)
+        - name: web-files
+          mountPath: /usr/share/nginx/html
+        # Mount Nginx config from ConfigMap
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
+      volumes:
+      - name: web-files
+        hostPath:
+          path: /home/pi/Home-Lab-test/web
+          type: Directory
+      - name: nginx-config
+        configMap:
+          name: pi-web-config
