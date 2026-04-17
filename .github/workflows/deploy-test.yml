@@ -24,4 +24,4 @@ jobs:
 
       - name: Apply test Kubernetes manifests
         run: |
-          kubectl apply -f /home/pi/Home-Lab-test/k8s/nginx-test/
+          sudo kubectl apply -f /home/pi/Home-Lab-test/k8s/nginx-test/
