@@ -24,4 +24,4 @@ jobs:
 
       - name: Apply prod Kubernetes manifests
         run: |
-          kubectl apply -f /home/pi/Home-Lab/k8s/nginx/
+          sudo kubectl apply -f /home/pi/Home-Lab/k8s/nginx/
