@@ -11,28 +11,28 @@ services:
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
   # 2. Zigbee2MQTT (The bridge to your Dongle Max)
-zigbee2mqtt:
-  image: koenkk/zigbee2mqtt:latest
-  container_name: zigbee2mqtt
-  restart: unless-stopped
-  ports:
-    - "8585:8080"
-  volumes:
-    - ./zigbee2mqtt-data:/app/data
-  environment:
-    - TZ=Europe/London
-  depends_on:
-    - mosquitto
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    ports:
+      - "8585:8080"
+    volumes:
+      - ./zigbee2mqtt-data:/app/data
+    environment:
+      - TZ=Europe/London
+    depends_on:
+      - mosquitto
 
 # 3. Home Assistant Core
-homeassistant:
-  image: ghcr.io/home-assistant/home-assistant:stable
-  container_name: homeassistant
-  restart: unless-stopped
-  network_mode: host # Crucial for mDNS/local device discovery
-  volumes:
-    - ./homeassistant-config:/config
-  environment:
-    - TZ=Europe/London
-  depends_on:
-    - mosquitto
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    network_mode: host # Crucial for mDNS/local device discovery
+    volumes:
+      - ./homeassistant-config:/config
+    environment:
+      - TZ=Europe/London
+    depends_on:
+      - mosquitto
