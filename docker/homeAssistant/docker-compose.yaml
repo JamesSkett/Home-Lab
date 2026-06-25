@@ -29,9 +29,9 @@ services:
     image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant
     restart: unless-stopped
-    network_mode: host # Crucial for mDNS/local device discovery
+    network_mode: host
     volumes:
-      - ./homeassistant-config:/config
+      - ./homeassistant:/config # <-- Changed back to your original data folder!
     environment:
       - TZ=Europe/London
     depends_on:
